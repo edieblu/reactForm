@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import SingleInput from '../components/SingleInput';
 import Select from '../components/Select';
-require('dotenv').config();
 
 // set state and bind
 class FormContainer extends Component {
@@ -15,8 +14,8 @@ class FormContainer extends Component {
 			age: 0,
     };
     
-		this.handleFormSubmit = this.handleFormSubmit.bind(this);
-    this.handleClearForm = this.handleClearForm.bind(this);
+		// this.handleFormSubmit = this.handleFormSubmit.bind(this);
+    // this.handleClearForm = this.handleClearForm.bind(this);
   }
 	
 	// fetch form options from database
@@ -25,7 +24,7 @@ class FormContainer extends Component {
 			.then(res => res.json())
 			.then(data => {
 				this.setState({
-          givenName: data.ownerName,
+          givenName: data.givenName,
           familyName: data.familyName,
           genderOptions: data.genderOptions,
           gender: data.gender,
@@ -71,10 +70,10 @@ class FormContainer extends Component {
 			"age": this.state.age
 		};
 
+
+
 		// send to Bahmni person API
-		const url = process.env.REACT_APP_URL;
-
-
+		const url = "https://192.168.33.10/openmrs/ws/rest/v1/person";
     fetch(url, {
       method: 'POST',
       body: JSON.stringify(formPayload), // data can be `string` or {object}!
@@ -86,16 +85,15 @@ class FormContainer extends Component {
     
     }).then(res => res.json())
     .catch(error => console.error('Error:', error))
-    .then(response => console.log('Success:', response));
-    
-
+		.then(response => console.log('Success:', response));
+		
 		console.log('Send this in a POST request:', formPayload);
 		this.handleClearForm(e);
 	}
 
 	render() {
 		return (
-			<form className="container" onSubmit={this.handleFormSubmit}>
+			<form className="container" onSubmit={e => this.handleFormSubmit(e)}>
 				<h5>Sign Up Form</h5>
 				<SingleInput
 					inputType={'text'}
@@ -134,7 +132,7 @@ class FormContainer extends Component {
 					value="Submit"/>
 				<button
 					className="btn btn-link float-left"
-					onClick={this.handleClearForm}>Clear form</button>
+					onClick={e => this.handleClearForm(e)}>Clear form</button>
 			</form>
 		);
 	}
