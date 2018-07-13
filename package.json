@@ -1,5 +1,6 @@
 {
   "name": "form",
+  "homepage": "https://edieblu.github.io/reactForm/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
