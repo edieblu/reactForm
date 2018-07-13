@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import SingleInput from '../components/SingleInput';
 import Select from '../components/Select';
+import fetch from 'isomorphic-fetch'
 
 // set state and bind
 class FormContainer extends Component {
@@ -73,7 +74,8 @@ class FormContainer extends Component {
 
 
 		// send to Bahmni person API
-		const url = "https://192.168.33.10/openmrs/ws/rest/v1/person";
+		// const url = "https://192.168.33.10/openmrs/ws/rest/v1/person";
+		const url = process.env.REACT_APP_URL;
     fetch(url, {
       method: 'POST',
       body: JSON.stringify(formPayload), // data can be `string` or {object}!
