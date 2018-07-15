@@ -1,8 +1,7 @@
 {
-  "givenName": "",
-  "familyName": "",
-  "genderOptions": ["male", "female", "other", "prefer not to say"],
-  "gender": "",
+  "givenName":"",
+  "familyName":"",
+  "genderOptions":["Male", "Female", "Other", "Prefer not to say" ],
+  "gender":"",
   "age": 0
 }
-

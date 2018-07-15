@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import SingleInput from '../components/SingleInput';
 import Select from '../components/Select';
-import fetch from 'isomorphic-fetch'
 
 // set state and bind
 class FormContainer extends Component {
@@ -10,29 +9,31 @@ class FormContainer extends Component {
 		this.state = {
       givenName: '',
       familyName: '',
-      genderOptions: [],
+      genderOptions: ["Male", "Female", "Other", "Prefer not to say" ],
       gender: '',
-			age: 0,
+			age: 0
     };
     
-		// this.handleFormSubmit = this.handleFormSubmit.bind(this);
-    // this.handleClearForm = this.handleClearForm.bind(this);
+		this.handleFormSubmit = this.handleFormSubmit.bind(this);
+    this.handleClearForm = this.handleClearForm.bind(this);
   }
 	
 	// fetch form options from database
-	componentDidMount() {
-		fetch('./fake_db.json')
-			.then(res => res.json())
-			.then(data => {
-				this.setState({
-          givenName: data.givenName,
-          familyName: data.familyName,
-          genderOptions: data.genderOptions,
-          gender: data.gender,
-          age: data.age,
-				});
-			});
-	}
+	// componentDidMount() {
+	// 	fetch('http://localhost:3000/fake_db.json')
+	// 		.then(res => res.json())
+	// 		.then(data => {
+	// 			this.setState({
+	// 				givenName: data.givenName,
+	// 				familyName: data.familyName,
+	// 				genderOptions: data.genderOptions,
+	// 				gender: data.gender,
+	// 				age: data.age,
+	// 			});
+	// 		});
+	// }
+
+
 
 	// handle inputs with real-time console logging 
 	handleGivenName(e) {
@@ -54,9 +55,12 @@ class FormContainer extends Component {
       givenName: '',
       familyName: '',
       gender: '',
-			age: 0,
+			age: 0
 		});
 	}
+
+
+
 	handleFormSubmit(e) {
 		e.preventDefault();
 
@@ -75,19 +79,19 @@ class FormContainer extends Component {
 
 		// send to Bahmni person API
 		// const url = "https://192.168.33.10/openmrs/ws/rest/v1/person";
-		const url = process.env.REACT_APP_URL;
-    fetch(url, {
-      method: 'POST',
-      body: JSON.stringify(formPayload), // data can be `string` or {object}!
-      headers:{
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      },
-      credentials: 'include'
+		// const url = process.env.REACT_APP_URL;
+    // fetch(url, {
+    //   method: 'POST',
+    //   body: JSON.stringify(formPayload), // data can be `string` or {object}!
+    //   headers:{
+    //     'Content-Type': 'application/json',
+    //     'Accept': 'application/json',
+    //   },
+    //   credentials: 'include'
     
-    }).then(res => res.json())
-    .catch(error => console.error('Error:', error))
-		.then(response => console.log('Success:', response));
+    // }).then(res => res.json())
+    // .catch(error => console.error('Error:', error))
+		// .then(response => console.log('Success:', response));
 		
 		console.log('Send this in a POST request:', formPayload);
 		this.handleClearForm(e);
@@ -95,7 +99,7 @@ class FormContainer extends Component {
 
 	render() {
 		return (
-			<form className="container" onSubmit={e => this.handleFormSubmit(e)}>
+			<form className="container" onSubmit={this.handleFormSubmit}>
 				<h5>Sign Up Form</h5>
 				<SingleInput
 					inputType={'text'}
@@ -134,7 +138,7 @@ class FormContainer extends Component {
 					value="Submit"/>
 				<button
 					className="btn btn-link float-left"
-					onClick={e => this.handleClearForm(e)}>Clear form</button>
+					onClick={this.handleClearForm}>Clear form</button>
 			</form>
 		);
 	}
