@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/edieblu/reactForm.svg?branch=master)](https://travis-ci.org/edieblu/reactForm)
+
 To get started:
 
 1. Make sure you have node
