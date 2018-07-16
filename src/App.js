@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import FormContainer from './containers/FormContainer';
-import './index.css'
-
+import './index.css';
 
 class App extends Component {
   render() {
