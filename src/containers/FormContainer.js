@@ -18,21 +18,6 @@ class FormContainer extends Component {
     this.handleClearForm = this.handleClearForm.bind(this);
   }
 
-  // fetch form options from database
-  // componentDidMount() {
-  // 	fetch('http://localhost:3000/fake_db.json')
-  // 		.then(res => res.json())
-  // 		.then(data => {
-  // 			this.setState({
-  // 				givenName: data.givenName,
-  // 				familyName: data.familyName,
-  // 				genderOptions: data.genderOptions,
-  // 				gender: data.gender,
-  // 				age: data.age,
-  // 			});
-  // 		});
-  // }
-
   // handle inputs with real-time console logging
   handleGivenName(e) {
     this.setState({ givenName: e.target.value }, () =>
@@ -81,19 +66,19 @@ class FormContainer extends Component {
 
     // send to Bahmni person API
     // const url = "https://192.168.33.10/openmrs/ws/rest/v1/person";
-    // const url = process.env.REACT_APP_URL;
-    // fetch(url, {
-    //   method: 'POST',
-    //   body: JSON.stringify(formPayload), // data can be `string` or {object}!
-    //   headers:{
-    //     'Content-Type': 'application/json',
-    //     'Accept': 'application/json',
-    //   },
-    //   credentials: 'include'
-
-    // }).then(res => res.json())
-    // .catch(error => console.error('Error:', error))
-    // .then(response => console.log('Success:', response));
+    const url = process.env.REACT_APP_URL;
+    fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(formPayload), // data can be `string` or {object}!
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      },
+      credentials: 'include'
+    })
+      .then(res => res.json())
+      .catch(error => console.error('Error:', error))
+      .then(response => console.log('Success:', response));
 
     console.log('Send this in a POST request:', formPayload);
     this.handleClearForm(e);
@@ -126,7 +111,7 @@ class FormContainer extends Component {
           placeholder={'Gender'}
           controlFunc={e => this.handleGenderOptions(e)}
           options={this.state.genderOptions}
-          selectedOptions={this.state.gender}
+          selectedOption={this.state.gender}
         />
 
         <SingleInput
